@@ -21,16 +21,15 @@ jobs:
     - name: SonarQube Scan
       uses: kitabisa/sonarqube-action@v1.2.0
       with:
-        host: ${{ secrets.SONARQUBE_HOST }}
+        host: ${{ secrets.SONAR_URL }}
         login: ${{ secrets.SONARQUBE_TOKEN }}
-You can change the analysis base directory and/or project key by using the optional input like this:
+        projectBaseDir: "src/"
+        projectKey: "nitor-react-app"
 
-uses: kitabisa/sonarqube-action@master
-with:
-  host: ${{ secrets.SONARQUBE_HOST }}
-  login: ${{ secrets.SONARQUBE_TOKEN }}
-  projectBaseDir: "src/"
-  projectKey: "nitor-react-app"
+
+
+
+   
 
 
 
