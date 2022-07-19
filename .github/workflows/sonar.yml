@@ -1,0 +1,44 @@
+on:
+  # Trigger analysis when pushing in master or pull requests, and when creating
+  # a pull request. 
+  push:
+    branches:
+      - master
+  pull_request:
+      types: [opened, synchronize, reopened]
+
+name: SonarQube Scan
+jobs:
+  sonarqube:
+    name: SonarQube Trigger
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checking out
+      uses: actions/checkout@master
+      with:
+        # Disabling shallow clone is recommended for improving relevancy of reporting
+        fetch-depth: 0
+    - name: SonarQube Scan
+      uses: kitabisa/sonarqube-action@v1.2.0
+      with:
+        host: ${{ secrets.SONARQUBE_HOST }}
+        login: ${{ secrets.SONARQUBE_TOKEN }}
+You can change the analysis base directory and/or project key by using the optional input like this:
+
+uses: kitabisa/sonarqube-action@master
+with:
+  host: ${{ secrets.SONARQUBE_HOST }}
+  login: ${{ secrets.SONARQUBE_TOKEN }}
+  projectBaseDir: "src/"
+  projectKey: "my-custom-project"
+Inputs
+These are some of the supported input parameters of action.
+
+host - (Required) this is the SonarQube server URL.
+login - (Required) the login or authentication token of a SonarQube user with Execute Analysis permission on the project. See how to generate SonarQube token.
+password - The password that goes with the login username. This should be left blank if an login are authentication token.
+projectBaseDir - Set custom project base directory analysis.
+projectKey - The project's unique key (allowed characters are: letters, numbers, -, _, . and :, with at least one non-digit).
+projectName - Name of the project that will be displayed on the SonarQube web interface.
+projectVersion - The project version.
+encoding - Encoding of the source code. Default is UTF-8.
